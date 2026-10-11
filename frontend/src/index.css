@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --color-ink-950: #070a14;
+  --color-ink-900: #0c1120;
+  --color-ink-850: #111830;
+  --color-ink-800: #172041;
+  --color-ink-700: #1f2a52;
+  --color-ink-600: #2d3a68;
+  --color-line: #232d4f;
+
+  --color-fg: #e9edf9;
+  --color-fg-muted: #a8b3d4;
+  --color-fg-subtle: #8f9bc0;
+
+  --color-accent: #6366f1;
+  --color-accent-soft: #818cf8;
+  --color-violet: #8b5cf6;
+  --color-electric: #38bdf8;
+  --color-danger: #fb7185;
+  --color-success: #34d399;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 48px -28px rgba(2, 6, 23, 0.9);
+  --shadow-glow: 0 10px 30px -10px rgba(99, 102, 241, 0.55);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+    color: var(--color-fg);
+    background:
+      radial-gradient(1100px 560px at 8% -8%, rgba(99, 102, 241, 0.17), transparent 60%),
+      radial-gradient(900px 480px at 100% 0%, rgba(56, 189, 248, 0.08), transparent 55%),
+      var(--color-ink-950);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-electric);
+    outline-offset: 2px;
+  }
+
+  select option {
+    background: var(--color-ink-900);
+    color: var(--color-fg);
+  }
+
+  ::selection {
+    background: rgba(129, 140, 248, 0.45);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-ink-900/75 shadow-card backdrop-blur-md;
+  }
+
+  .field-control {
+    @apply min-h-12 w-full rounded-xl border border-line bg-ink-950/70 px-4 text-base text-fg transition-colors hover:border-ink-600 focus:border-accent-soft;
+  }
+  .field-control::placeholder {
+    color: var(--color-fg-subtle);
+  }
+  .field-control[aria-invalid='true'] {
+    @apply border-danger;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-linear-to-r from-accent to-violet px-6 text-base font-semibold text-white shadow-glow transition duration-200 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:brightness-100;
+  }
+  .btn-secondary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-line bg-ink-850 px-6 text-base font-semibold text-fg transition duration-200 hover:border-ink-600 hover:bg-ink-800 disabled:cursor-not-allowed disabled:opacity-70;
+  }
+}
+
+/* One-time entrance used by the hero ring and the result card. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
